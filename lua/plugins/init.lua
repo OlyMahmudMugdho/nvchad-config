@@ -21,6 +21,27 @@ return {
   "MunifTanjim/nui.nvim",
   "mfussenegger/nvim-dap",
 
+  {
+    "github/copilot.vim",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    build = ":Copilot setup",
+  },
+
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "main",
+    cmd = {
+      "CopilotChat",
+      "CopilotChatToggle",
+      "CopilotChatOpen",
+      "CopilotChatClose",
+    },
+    dependencies = {
+      "zbirenbaum/copilot.lua",
+    },
+  },
+
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
