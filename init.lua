@@ -1,6 +1,13 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
+-- Disable terminal flow control (Ctrl+S/Q)
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.fn.system("stty -ixon 2>/dev/null")
+  end,
+})
+
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 

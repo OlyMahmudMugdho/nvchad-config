@@ -5,6 +5,22 @@ return {
     opts = require "configs.conform",
   },
 
+  {
+    "nvim-java/nvim-java",
+    config = function()
+      require("java").setup()
+      vim.lsp.enable("jdtls")
+    end,
+  },
+
+  {
+    "JavaHello/spring-boot.nvim",
+    commit = "218c0c26c14d99feca778e4d13f5ec3e8b1b60f0",
+  },
+
+  "MunifTanjim/nui.nvim",
+  "mfussenegger/nvim-dap",
+
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
