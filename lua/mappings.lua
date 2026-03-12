@@ -29,47 +29,49 @@ local function spring()
   return nil
 end
 
-local function java()
-  local ok, java = pcall(require, "jdtls")
-  if ok then
-    return java
-  end
-  return nil
+local function java_organize_imports()
+  vim.lsp.buf.code_action({
+    apply = true,
+    context = {
+      only = { "source.organizeImports" },
+      diagnostics = {},
+    },
+  })
 end
 
-map("n", "<leader>jsb", function()
-  local s = spring()
-  if s then s.find_beans() end
-end, { desc = "Find Spring Beans" })
+local function java_test_class()
+  local ok, java_test = pcall(require, "java-test")
+  if ok and java_test then
+    java_test.test_class()
+  else
+    vim.cmd("wa")
+    vim.cmd("TestFile")
+  end
+end
 
-map("n", "<leader>jse", function()
-  local s = spring()
-  if s then s.find_endpoints() end
-end, { desc = "Find Spring Endpoints" })
+local function java_run_main_class()
+  local ok, java_debug = pcall(require, "java-debug")
+  if ok and java_debug then
+    java_debug.attach()
+  else
+    vim.cmd("wa")
+    local bufname = vim.fn.bufname("%")
+    local classname = vim.fn.fnamemodify(bufname, ":t:r")
+    if classname and classname ~= "" then
+      vim.cmd("!java " .. classname)
+    end
+  end
+end
 
-map("n", "<leader>jsp", function()
-  local s = spring()
-  if s then s.project_properties() end
-end, { desc = "Spring Project Properties" })
-
-map("n", "<leader>jo", function()
-  local j = java()
-  if j then j.organize_imports() end
-end, { desc = "Organize Java Imports" })
+map("n", "<leader>jo", java_organize_imports, { desc = "Organize Java Imports" })
 
 map("n", "<leader>jc", function()
   vim.cmd("LspWorkspaceDiagnostics")
 end, { desc = "Show Java Diagnostics" })
 
-map("n", "<leader>jdt", function()
-  local j = java()
-  if j then j.test_class() end
-end, { desc = "Debug Test Class" })
+map("n", "<leader>jdt", java_test_class, { desc = "Debug Test Class" })
 
-map("n", "<leader>jrm", function()
-  local j = java()
-  if j then j.run_main_class() end
-end, { desc = "Run Main Class" })
+map("n", "<leader>jrm", java_run_main_class, { desc = "Run Main Class" })
 
 -- LSP keybindings
 map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })

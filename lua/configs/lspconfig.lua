@@ -1,6 +1,6 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "html", "cssls", "pyright" }
+local servers = { "pyright", "jdtls" }
 vim.lsp.enable(servers)
 
 -- Configure YAML for Spring Boot application.yml
@@ -25,27 +25,25 @@ vim.lsp.config("yamlls", {
 
 -- Configure pyright with virtualenv detection for uv, venv, etc.
 vim.lsp.config("pyright", {
-  cmd = (function()
-    -- Check VIRTUAL_ENV env var first
+  cmd = function()
     local venv = vim.env.VIRTUAL_ENV
     if venv then
       if vim.fn.has("win32") == 1 then
-        return { venv .. "/Scripts/python.exe" }
+        return { venv .. "/Scripts/python.exe", "--stdio" }
       else
-        return { venv .. "/bin/python" }
+        return { venv .. "/bin/python", "--stdio" }
       end
     end
-    
-    -- Check for .venv (uv default) in current directory
+
     local cwd = vim.fn.getcwd()
     local uv_venv = vim.fn.glob(cwd .. "/.venv/bin/python")
     if uv_venv ~= "" then
-      return { uv_venv }
+      return { uv_venv, "--stdio" }
     end
-    
-    -- Fallback to system python
-    return { "pyright" }
-  end)(),
+
+    local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+    return { mason_bin .. "/pyright-langserver", "--stdio" }
+  end,
   settings = {
     python = {
       analysis = {
