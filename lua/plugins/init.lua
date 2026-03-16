@@ -64,6 +64,10 @@ return {
         "jdtls-test",
         "yaml-language-server",
         "pyright",
+        "typescript-language-server",
+        "volar",
+        "eslint",
+        "prettier",
       },
       registries = {
         "github:mason-org/mason-registry",

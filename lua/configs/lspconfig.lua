@@ -1,6 +1,6 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "pyright", "jdtls" }
+local servers = { "pyright", "jdtls", "vtsls", "eslint" }
 vim.lsp.enable(servers)
 
 -- Configure YAML for Spring Boot application.yml
@@ -53,6 +53,79 @@ vim.lsp.config("pyright", {
         typeCheckingMode = "basic",
         reportAttributeAccessIssue = false,
       },
+    },
+  },
+})
+
+-- Configure vtsls for TypeScript/JavaScript (Express.js, NestJS, Vue)
+vim.lsp.config("vtsls", {
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+      suggest = {
+        autoImports = true,
+        completeFunctionCalls = true,
+        includeCompletionsForModuleExports = true,
+      },
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+      suggest = {
+        autoImports = true,
+        completeFunctionCalls = true,
+        includeCompletionsForModuleExports = true,
+      },
+    },
+    vtsls = {
+      experimental = {
+        completions = {
+          excludeWordsInCompletions = true,
+        },
+      },
+      autoUseWorkspaceTsdk = true,
+    },
+  },
+})
+
+-- Configure ESLint
+vim.lsp.config("eslint", {
+  on_attach = function(client, bufnr)
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end,
+  settings = {
+    codeAction = {
+      disableRuleComment = {
+        seeConfig = true,
+      },
+    },
+    format = true,
+    nodePath = "",
+    onIgnored = "none",
+    packageManager = "npm",
+    quiet = true,
+    rulesCustomizations = {},
+    run = "onType",
+    useESLintClass = false,
+    validate = "on",
+    workingDirectory = {
+      mode = "location",
     },
   },
 })

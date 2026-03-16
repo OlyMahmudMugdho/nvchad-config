@@ -80,8 +80,12 @@ map("n", "<leader>vws", vim.lsp.buf.workspace_symbol, { desc = "Workspace symbol
 map("n", "<leader>vd", vim.diagnostic.open_float, { desc = "Diagnostic open float" })
 map("n", "[d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 map("n", "]d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
-map("n", "<leader>vca", vim.lsp.buf.code_action, { desc = "Code action" })
-map({ "n", "i" }, "<C-.>", vim.lsp.buf.code_action, { desc = "Code action (Ctrl+.)" })
+map("n", "<leader>vca", vim.lsp.buf.code_action, { desc = "Code action (show menu)" })
+map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action (show menu)" })
+
+-- Alt+Enter to apply LSP fix (VS Code style)
+map({ "n", "i" }, "<M-CR>", vim.lsp.buf.code_action, { desc = "Code action (Alt+Enter)" })
+
 map("n", "<leader>vrr", vim.lsp.buf.references, { desc = "References" })
 map("n", "<leader>vrn", vim.lsp.buf.rename, { desc = "Rename" })
 
