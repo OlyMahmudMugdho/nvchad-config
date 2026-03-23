@@ -1,6 +1,6 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "pyright", "jdtls", "vtsls", "eslint" }
+local servers = { "pyright", "jdtls", "vtsls", "eslint", "gopls" }
 vim.lsp.enable(servers)
 
 -- Configure YAML for Spring Boot application.yml
@@ -131,3 +131,40 @@ vim.lsp.config("eslint", {
 })
 
 vim.lsp.enable("yamlls")
+
+
+-- Configure gopls for Go (golang) with auto-import and suggestions
+vim.lsp.config("gopls", {
+  settings = {
+    gopls = {
+      -- Enable auto-import
+      ["autoImport"] = true,
+      -- Enable analyses
+      analyses = {
+        unusedvars = true,
+        shadow = true,
+        ["nil"] = true,
+        unreachable = true,
+        composite = true,
+      },
+      -- Use gofumpt for formatting
+      format = "gofumpt",
+      -- Enable module mode
+      moduleMode = "workspace",
+      -- Hover controls
+      hover = {
+        full = true,
+      },
+      -- Completion settings
+      completions = {
+        autoImport = true,
+        fullyImport = true,
+      },
+      -- Semantic tokens
+      semanticTokens = true,
+    },
+  },
+})
+
+-- Add gopls to enabled servers
+vim.lsp.enable("gopls")

@@ -68,6 +68,9 @@ return {
         "volar",
         "eslint",
         "prettier",
+        "gopls",
+        "gofumpt",
+        "goimports",
       },
       registries = {
         "github:mason-org/mason-registry",
