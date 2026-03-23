@@ -20,7 +20,7 @@ M.ui = {
 					local ft = vim.bo.filetype
 					
 					local run_cmds = {
-						python = "python",
+						python = "python3",
 						javascript = "node",
 						typescript = "npx ts-node",
 						go = "go run",

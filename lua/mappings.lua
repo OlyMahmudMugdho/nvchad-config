@@ -115,7 +115,7 @@ map("n", "<leader>rr", function()
   
   -- Define run commands for common filetypes
   local run_cmds = {
-    python = "python",
+    python = "python3",
     javascript = "node",
     typescript = "npx ts-node",
     go = "go run",
