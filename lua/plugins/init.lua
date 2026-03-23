@@ -253,5 +253,14 @@ return {
       })
     end,
   },
+
+  -- Overseer - code runner / task runner
+  {
+    "stevearc/overseer.nvim",
+    cmd = { "OverseerRun", "Overseer", "OverseerToggle" },
+    config = function()
+      require("overseer").setup(require("configs.overseer"))
+    end,
+  },
 }
 

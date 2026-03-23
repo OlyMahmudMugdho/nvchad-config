@@ -107,3 +107,42 @@ map("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle undotree" })
 
 -- Fugitive keybinding
 map("n", "<leader>gs", vim.cmd.Git, { desc = "Git status" })
+
+-- Code runner keybindings
+map("n", "<leader>rr", function()
+  local bufname = vim.fn.bufname("%")
+  local ft = vim.bo.filetype
+  
+  -- Define run commands for common filetypes
+  local run_cmds = {
+    python = "python",
+    javascript = "node",
+    typescript = "npx ts-node",
+    go = "go run",
+    rust = "cargo run",
+    java = "java",
+    lua = "luajit",
+  }
+  
+  local runner = run_cmds[ft]
+  if runner then
+    local filepath = vim.api.nvim_buf_get_name(0)
+    local filedir = vim.fn.fnamemodify(filepath, ":p:h")
+    
+    local cmd
+    if ft == "rust" then
+      cmd = "cd " .. filedir .. " && cargo run"
+    elseif ft == "go" then
+      cmd = "cd " .. filedir .. " && go run " .. vim.fn.fnamemodify(filepath, ":t")
+    else
+      cmd = runner .. " " .. filepath
+    end
+    
+    -- Use terminal for cleaner output
+    vim.cmd("terminal " .. cmd)
+  else
+    vim.cmd("OverseerRun")
+  end
+end, { desc = "Run current file" })
+
+map("n", "<leader>rt", vim.cmd.OverseerToggle, { desc = "Toggle Overseer task list" })
