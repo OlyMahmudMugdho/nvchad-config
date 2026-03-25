@@ -137,8 +137,6 @@ vim.lsp.enable("yamlls")
 vim.lsp.config("gopls", {
   settings = {
     gopls = {
-      -- Enable auto-import
-      ["autoImport"] = true,
       -- Enable analyses
       analyses = {
         unusedvars = true,
@@ -148,17 +146,10 @@ vim.lsp.config("gopls", {
         composite = true,
       },
       -- Use gofumpt for formatting
-      format = "gofumpt",
-      -- Enable module mode
-      moduleMode = "workspace",
-      -- Hover controls
-      hover = {
-        full = true,
-      },
-      -- Completion settings
-      completions = {
-        autoImport = true,
-        fullyImport = true,
+      ui = {
+        format = {
+          ["local"] = "gofumpt",
+        },
       },
       -- Semantic tokens
       semanticTokens = true,
