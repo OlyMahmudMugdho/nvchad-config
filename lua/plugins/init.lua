@@ -71,6 +71,7 @@ return {
         "gopls",
         "gofumpt",
         "goimports",
+        "rust-analyzer",
       },
       registries = {
         "github:mason-org/mason-registry",

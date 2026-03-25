@@ -1,6 +1,6 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "pyright", "jdtls", "vtsls", "eslint", "gopls" }
+local servers = { "pyright", "jdtls", "vtsls", "eslint", "gopls", "rust_analyzer" }
 vim.lsp.enable(servers)
 
 -- Configure YAML for Spring Boot application.yml
@@ -159,3 +159,24 @@ vim.lsp.config("gopls", {
 
 -- Add gopls to enabled servers
 vim.lsp.enable("gopls")
+
+-- Configure rust-analyzer for Rust
+vim.lsp.config("rust_analyzer", {
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+        loadOutDirsFromCheck = true,
+        runBuildScripts = true,
+      },
+      checkOnSave = {
+        command = "clippy",
+      },
+      procMacro = {
+        enable = true,
+      },
+    },
+  },
+})
+
+vim.lsp.enable("rust_analyzer")
