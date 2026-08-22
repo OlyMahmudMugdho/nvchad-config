@@ -167,17 +167,21 @@ return {
   -- Treesitter for syntax highlighting
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     build = ":TSUpdate",
     opts = {
       ensure_installed = {
         "vim", "lua", "vimdoc",
         "html", "css", "javascript", "typescript",
-        "python", "java", "json", "yaml", "markdown",
+        "python", "java", "json", "yaml", "markdown", "markdown_inline",
         "go", "rust", "c", "cpp",
       },
       highlight = { enable = true },
       indent = { enable = true },
     },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
 
   -- nvim-cmp for completion
