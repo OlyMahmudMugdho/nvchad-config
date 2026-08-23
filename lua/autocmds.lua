@@ -6,3 +6,10 @@ vim.g.loaded_netrwPlugin = 1
 
 -- Disable nvim-tree fs_events (fixes watcher issues on WSL/network drives)
 vim.g.nvim_tree_respawn_on_bufenter = 1
+
+-- Treat .blade.php files as blade filetype
+vim.filetype.add({
+  pattern = {
+    [".*%.blade%.php"] = "blade",
+  },
+})

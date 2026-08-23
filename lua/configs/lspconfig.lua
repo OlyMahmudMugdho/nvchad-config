@@ -1,6 +1,6 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "pyright", "jdtls", "vtsls", "eslint", "gopls", "rust_analyzer" }
+local servers = { "pyright", "jdtls", "vtsls", "eslint", "gopls", "rust_analyzer", "intelephense" }
 vim.lsp.enable(servers)
 
 -- Configure YAML for Spring Boot application.yml
@@ -180,3 +180,19 @@ vim.lsp.config("rust_analyzer", {
 })
 
 vim.lsp.enable("rust_analyzer")
+
+-- Configure intelephense with higher memory limit for Laravel IDE helper
+vim.lsp.config("intelephense", {
+  root_dir = function(fname)
+    local util = require("lspconfig.util")
+    return util.root_pattern("composer.json", ".git", "artisan")(fname) or vim.fn.getcwd()
+  end,
+  settings = {
+    intelephense = {
+      files = {
+        maxSize = 5000000,
+      },
+    },
+  },
+})
+vim.lsp.enable("intelephense")

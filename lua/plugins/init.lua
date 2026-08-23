@@ -72,6 +72,8 @@ return {
         "gofumpt",
         "goimports",
         "rust-analyzer",
+        "intelephense",
+        "pint",
       },
       registries = {
         "github:mason-org/mason-registry",
@@ -175,11 +177,21 @@ return {
         "html", "css", "javascript", "typescript",
         "python", "java", "json", "yaml", "markdown", "markdown_inline",
         "go", "rust", "c", "cpp",
+        "php", "phpdoc", "blade",
       },
       highlight = { enable = true },
       indent = { enable = true },
     },
     config = function(_, opts)
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.blade = {
+        install_info = {
+          url = "https://github.com/EmranMR/tree-sitter-blade",
+          files = { "src/parser.c" },
+          branch = "main",
+        },
+        filetype = "blade",
+      }
       require("nvim-treesitter.configs").setup(opts)
     end,
   },
@@ -265,6 +277,28 @@ return {
     cmd = { "OverseerRun", "Overseer", "OverseerToggle" },
     config = function()
       require("overseer").setup(require("configs.overseer"))
+    end,
+  },
+
+  -- Laravel.nvim
+  {
+    "adalessa/laravel.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "tpope/vim-dotenv",
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-neotest/nvim-nio",
+    },
+    cmd = { "Laravel" },
+    keys = {
+      { "<leader>la", ":Laravel artisan<cr>", desc = "Laravel Artisan" },
+      { "<leader>lr", ":Laravel routes<cr>", desc = "Laravel Routes" },
+      { "<leader>lm", ":Laravel related<cr>", desc = "Laravel Related" },
+    },
+    event = { "VeryLazy" },
+    config = function()
+      require("laravel").setup({})
     end,
   },
 }
